@@ -1,14 +1,18 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./page.module.scss";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 const Login = ({ url }) => {
   const session = useSession();
   const router = useRouter();
-  if (session.status === "authenticated") {
-    router?.push("/home");
-  }
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router?.push("/");
+      toast.success(" You logged in successfully!");
+    }
+  }, [session]);
 
   return (
     <div className={styles.container}>
